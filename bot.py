@@ -1,12 +1,13 @@
 import sqlite3
 import telebot
-from keyboards import get_set_queue_button_keyboard, get_choose_subject_keyboard, current_subject_queue_keyboard
-from api_request import get_subjects
+from utils.keyboards import get_set_queue_button_keyboard, get_choose_subject_keyboard, current_subject_queue_keyboard
 
+from api_request import get_subjects
 
 subjects = get_subjects()
 
-token = '6408112672:AAFtkvp-Td51vThCAJyUrl5D0Wo55lVuRBY'
+with open('token.txt', 'r') as token_file:
+    token = token_file.read().strip()
 
 bot = telebot.TeleBot(token)
 
