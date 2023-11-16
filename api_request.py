@@ -15,7 +15,7 @@ day_map = {
 
 def date_regulate(n):
     today = datetime.date.today()
-    delta = n - today.weekday()
+    delta = n - today.weekday() if n is not None else 0
     result = (datetime.datetime.now() + datetime.timedelta(days=delta)).strftime("%d.%m")
     return result
 
