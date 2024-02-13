@@ -13,10 +13,18 @@ day_map = {
     "Воскресенье": 7,
 }
 
-def date_regulate(n):
+
+def date_regulate_current_week(n):
     today = datetime.date.today()
-    delta = n - today.weekday() if n is not None else 0
+    delta = n - today.weekday() - 1 if n is not None else 0
     result = (datetime.datetime.now() + datetime.timedelta(days=delta)).strftime("%d.%m")
+    return result
+
+
+def date_regulate_next_week(n):
+    today = datetime.date.today()
+    delta = n - today.weekday() - 1 if n is not None else 0
+    result = (datetime.datetime.now() + datetime.timedelta(days=7) + datetime.timedelta(days=delta)).strftime("%d.%m")
     return result
 
 
@@ -34,7 +42,7 @@ def get_subjects():
         data = json.loads(res.text)
         week = json.loads(current_week.text)
 
-        schedules = data.get("schedules", {})
+        schedules = data.get("previousSchedules", {})
         total_list = []
 
         for day in schedules:
@@ -44,7 +52,17 @@ def get_subjects():
                     if lesson.get("lessonTypeAbbrev") == 'ЛР':
                         less = lesson.get("subject", "")
                         subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
-                        less += subgroup + f' {date_regulate(day_map[day])}'
+                        less += subgroup + f' {date_regulate_current_week(day_map[day])}'
+                        total_list.append(less)
+
+        for day in schedules:
+            lessons = schedules[day]
+            for lesson in lessons:
+                if week + 1 in lesson.get("weekNumber", []):
+                    if lesson.get("lessonTypeAbbrev") == 'ЛР':
+                        less = lesson.get("subject", "")
+                        subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
+                        less += subgroup + f' {date_regulate_next_week(day_map[day])}'
                         total_list.append(less)
 
         return total_list
