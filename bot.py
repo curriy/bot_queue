@@ -113,10 +113,10 @@ def confirmation_handler(message):
         bot.send_message(message.chat.id, f'Запись на {database} не была удалена', reply_markup=markup)
 
 
-@bot.message_handler(content_types=['text'])
-def send_message(message):
-    if datetime.datetime.now() == lesson_time():
-        bot.send_message(-1001639367780, message.text)
+#@bot.message_handler(content_types=['text'])
+#def send_message(message):
+#    if datetime.datetime.now() == lesson_time():
+#        bot.send_message(-1001639367780, message.text)
 
 
 
