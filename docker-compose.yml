@@ -12,4 +12,4 @@ services:
     image: nouchka/sqlite3:latest
     volumes:
       - ./data/db:/db
-    command: sqlite3 /db/mydatabase.db
+    command: sqlite3 /db/373904.db
