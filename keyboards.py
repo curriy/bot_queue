@@ -18,6 +18,15 @@ def get_choose_action_keyboard(subject):
     return markup
 
 
+def confirmation_keyboard():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("Да")
+    btn2 = types.KeyboardButton("Нет")
+    markup.add(btn1, btn2)
+
+    return markup
+
+
 def get_choose_subject_keyboard(subjects):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 

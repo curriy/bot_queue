@@ -1,6 +1,6 @@
 import sqlite3
 import telebot
-from keyboards import get_set_queue_button_keyboard, get_choose_subject_keyboard, current_subject_queue_keyboard
+from keyboards import get_set_queue_button_keyboard, get_choose_subject_keyboard, current_subject_queue_keyboard, confirmation_keyboard
 from api_request import get_subjects
 
 
@@ -46,7 +46,7 @@ def handler(message):
                          f'Привет, {message.from_user.first_name}! Если хочешь занять очередь, нажми на кнопку ниже.',
                          reply_markup=markup)
 
-    if message.text in ['Занять очередь', 'Отмена записи']:
+    if message.text in ['Занять очередь', 'Отмена записи', 'Обмен записями']:
         markup = get_choose_subject_keyboard(subjects)
         global key_message
         key_message = message.text
@@ -76,27 +76,40 @@ def handler(message):
             conn.close()
 
         elif key_message == 'Отмена записи':
+            global database
             database = message.text
 
-            conn = sqlite3.connect('373904.db')
-            cur = conn.cursor()
+            markup = confirmation_keyboard()
+            confirmation_message = bot.send_message(message.chat.id, f'Вы действительно хотите удалить запись на {database}', reply_markup=markup)
+            bot.register_next_step_handler(confirmation_message, confirmation_handler)
 
-            cur.execute(f"DELETE FROM '{database}' WHERE uid = ?", (message.from_user.id,))
-            conn.commit()
 
-            cur.close()
-            conn.close()
+        #   elif key_message == 'Обмен записями':
+        #    sender_name = 1
+        #    database = message.text[18:]
+        #    conn = sqlite3.connect('373904.db')
+        #    cur = conn.cursor()
+        #    cur.close()
+        #    conn.close()
 
-            markup = get_set_queue_button_keyboard()
-            bot.send_message(message.chat.id, f'Запись на {database} удалена', reply_markup=markup)
 
-#    if 'Обмен записями на ' in message.text.strip():
-#        sender_name = 1
-#        database = message.text[18:]
-#        conn = sqlite3.connect('373904.db')
-#        cur = conn.cursor()
-#        cur.close()
-#        conn.close()
+def confirmation_handler(message):
+    if message.text == 'Да':
+        conn = sqlite3.connect('373904.db')
+        cur = conn.cursor()
+
+        cur.execute(f"DELETE FROM '{database}' WHERE uid = ?", (message.from_user.id,))
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        markup = get_set_queue_button_keyboard()
+        bot.send_message(message.chat.id, f'Запись на {database} удалена', reply_markup=markup)
+
+    else:
+        markup = get_set_queue_button_keyboard()
+        bot.send_message(message.chat.id, f'Запись на {database} не была удалена', reply_markup=markup)
 
 
 @bot.callback_query_handler(func=lambda call: True)
