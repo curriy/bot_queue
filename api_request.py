@@ -72,3 +72,7 @@ def get_subjects():
 
         print(f"Error parsing JSON data: {e}")
         return []
+
+
+def lesson_time():
+    pass
