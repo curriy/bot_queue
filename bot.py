@@ -2,12 +2,12 @@ import sqlite3
 import telebot
 from keyboards import get_set_queue_button_keyboard, get_choose_subject_keyboard, current_subject_queue_keyboard, confirmation_keyboard
 from api_request import get_subjects, lesson_time
-import datetime
+import asyncio
 
 
 subjects = get_subjects()
 
-token = '6408112672:AAFtkvp-Td51vThCAJyUrl5D0Wo55lVuRBY'
+token = '6638176662:AAGoQPiMLXqWqRFBPpTRk4WrTbx4rGH8QF0'
 
 bot = telebot.TeleBot(token)
 
@@ -92,6 +92,8 @@ def handler(message):
         #    cur = conn.cursor()
         #    cur.close()
         #    conn.close()
+#-1001639367780
+
 
 
 def confirmation_handler(message):
@@ -111,13 +113,6 @@ def confirmation_handler(message):
     else:
         markup = get_set_queue_button_keyboard()
         bot.send_message(message.chat.id, f'Запись на {database} не была удалена', reply_markup=markup)
-
-
-#@bot.message_handler(content_types=['text'])
-#def send_message(message):
-#    if datetime.datetime.now() == lesson_time():
-#        bot.send_message(-1001639367780, message.text)
-
 
 
 @bot.callback_query_handler(func=lambda call: True)

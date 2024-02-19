@@ -75,4 +75,4 @@ def get_subjects():
 
 
 def lesson_time():
-    pass
+    requests.get('https://iis.bsuir.by/api/v1/schedule?studentGroup=373904')
