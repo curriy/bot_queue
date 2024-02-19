@@ -8,8 +8,17 @@ services:
       - .:/app
     depends_on:
       - db
+    networks:
+      - app-network
+
   db:
     image: nouchka/sqlite3:latest
     volumes:
       - ./data/db:/db
     command: sqlite3 /db/373904.db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
