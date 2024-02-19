@@ -7,7 +7,7 @@ import asyncio
 
 subjects = get_subjects()
 
-token = '6638176662:AAGoQPiMLXqWqRFBPpTRk4WrTbx4rGH8QF0'
+token = '6408112672:AAFtkvp-Td51vThCAJyUrl5D0Wo55lVuRBY'
 
 bot = telebot.TeleBot(token)
 
