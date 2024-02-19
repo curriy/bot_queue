@@ -14,7 +14,7 @@ services:
   db:
     image: nouchka/sqlite3:latest
     volumes:
-      - db-data:/db
+      - ./data/db:/db
     command: sqlite3 /db/373904.db
     networks:
       - app-network
