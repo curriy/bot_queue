@@ -3,6 +3,7 @@ services:
   bot:
     build:
       context: .
+      network: host
       dockerfile: Dockerfile
     volumes:
       - .:/app
