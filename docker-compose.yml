@@ -16,7 +16,7 @@ services:
     image: nouchka/sqlite3:latest
     volumes:
       - ./data/db:/db
-    command: sqlite3 /db/373904.db
+    command: sqlite3 /373904.db
     networks:
       - app-network
 
@@ -25,4 +25,9 @@ networks:
     driver: bridge
 
 volumes:
-  - db-data:/db
+  db_data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+        type: none
+        device: /db
+        o: bind
