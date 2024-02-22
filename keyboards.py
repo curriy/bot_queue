@@ -3,9 +3,13 @@ from telebot import types
 
 def get_set_queue_button_keyboard():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    btn1 = types.KeyboardButton("Занять очередь")
+    btn1 = types.KeyboardButton("Занять очередь", )
     btn2 = types.KeyboardButton("Отмена записи")
+    # btn4 = types.KeyboardButton("Обмен записями")
+    btn3 = types.KeyboardButton("Мои записи")
+
     markup.add(btn1, btn2)
+    markup.add(btn3)
 
     return markup
 
