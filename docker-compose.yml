@@ -26,7 +26,7 @@ networks:
 
 volumes:
   db_data:
-    driver: local # Define the driver and options under the volume name
+    driver: local
     driver_opts:
         type: none
         device: /db
