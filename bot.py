@@ -152,7 +152,7 @@ def callback_query(call):
             cur = conn.cursor()
             cur.execute("SELECT u.name FROM records r left join users u on u.uid = r.uid WHERE r.subject = ? and r.date = ?", (subject, date))
             records = cur.fetchall()
-            records = '\n'.join([f'\n{index + 1}: {r[0]}' for (index, r) in enumerate(records)])
+            records = '\n'.join([f'{index + 1}: {r[0]}' for (index, r) in enumerate(records)])
 
             text = "Никого нет"
 
