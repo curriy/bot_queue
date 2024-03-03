@@ -84,7 +84,7 @@ def handle_text(message):
                          reply_markup=markup)
 
     elif message.text == 'Мои записи':
-        records = load_user_records(user_id, datetime.now().strftime('%Y-%m-%d'))
+        records = load_user_records(user_id, datetime.now().strftime('%m-%d'))
         response = 'Записи :\n' + '\n'.join([get_record_name(r) for r in records])
         bot.send_message(message.chat.id, response if records else "Нет записей")
     elif message.text == 'Отмена записи':
@@ -114,7 +114,7 @@ def confirmation_handler(message, action, user_id):
     if message.text in subjects and action == 'cancel':
         subject, date, subgroup = get_subject_info(message.text)
 
-        records = load_user_records(user_id, datetime.now().strftime('%Y-%m-%d'))
+        records = load_user_records(user_id, datetime.now().strftime('%m-%d'))
 
         if not subject:
             bot.send_message(message.chat.id, "Действие отменено.")
