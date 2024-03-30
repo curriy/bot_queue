@@ -85,7 +85,7 @@ def handle_text(message):
 
     elif message.text == 'Мои записи':
         records = load_user_records(user_id, datetime.now().strftime('%m-%d'))
-        response = 'Записи :\n' + '\n'.join([get_record_name(r) for r in records])
+        response = 'Записи:\n' + '\n'.join([get_record_name(r) for r in records])
         bot.send_message(message.chat.id, response if records else "Нет записей")
     elif message.text == 'Отмена записи':
         markup = get_choose_subject_keyboard(subjects)
