@@ -42,6 +42,7 @@ def get_subjects():
         data = json.loads(res.text)
         week = json.loads(current_week.text)
 
+        curr_week = week if week + 1 <= 4 else 1
         schedules = data.get("schedules", {})
         total_list = []
 
@@ -52,15 +53,17 @@ def get_subjects():
                     if lesson.get("lessonTypeAbbrev") == 'ЛР':
                         less = lesson.get("subject", "")
                         subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
-                        less += subgroup + f' {date_regulate_current_week(day_map[day])}'
-                        if int(date_regulate_current_week(day_map[day])[3:5]) >= int(datetime.date.today().strftime("%d.%m")[3:5]):
-                            if int(date_regulate_current_week(day_map[day])[:2]) >= int(datetime.date.today().strftime("%d.%m")[:2]):
+                        date = date_regulate_current_week(day_map[day])
+                        now = datetime.date.today().strftime("%d.%m")
+                        less += subgroup + f' {date}'
+                        if int(date[3:5]) >= int(now[3:5]):
+                            if int(date[:2]) >= int(now[:2]):
                                 total_list.append(less)
 
         for day in schedules:
             lessons = schedules[day]
             for lesson in lessons:
-                if week + 1 in lesson.get("weekNumber", []):
+                if curr_week in lesson.get("weekNumber", []):
                     if lesson.get("lessonTypeAbbrev") == 'ЛР':
                         less = lesson.get("subject", "")
                         subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
