@@ -153,16 +153,15 @@ def callback_query(call):
             cur.execute("SELECT u.name, u.uid FROM records r left join users u on u.uid = r.uid WHERE r.subject = ? and r.date = ?", (subject, date))
             records = cur.fetchall()
 
-            records = [f'<b>{idx + 1}: {record[0]}</b>' if record[1] == call.chat.id else f'{idx + 1}: {record[0]}' for (idx, record) in enumerate(records)]
+            records = [f'<b>{idx + 1}: {record[0]}</b>' if record[1] == call.message.chat.id else f'{idx + 1}: {record[0]}' for (idx, record) in enumerate(records)]
 
-            records = '\n'.join([f'{index + 1}: {r[0]}' for (index, r) in enumerate(records)])
+            records = '\n'.join(records)
             text = "Никого нет"
 
             if records:
                 text = f"Текущая очередь:\n {records}"
 
             cur.close()
-            conn.close()
 
             bot.send_message(call.message.chat.id, text, parse_mode='html')
 
