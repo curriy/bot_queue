@@ -63,7 +63,7 @@ def get_subjects():
         for day in schedules:
             lessons = schedules[day]
             for lesson in lessons:
-                if curr_week in lesson.get("weekNumber", []):
+                if week + 1 in lesson.get("weekNumber", []):
                     if lesson.get("lessonTypeAbbrev") == 'ЛР':
                         less = lesson.get("subject", "")
                         subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
