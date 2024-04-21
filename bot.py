@@ -159,7 +159,7 @@ def callback_query(call):
             text = "Никого нет"
 
             if records:
-                text = f"Текущая очередь:\n {records}"
+                text = f"Текущая очередь:\n{records}"
 
             cur.close()
 
