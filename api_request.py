@@ -42,7 +42,7 @@ def get_subjects():
         data = json.loads(res.text)
         week = json.loads(current_week.text)
 
-        curr_week = week if week + 1 <= 4 else 1
+        curr_week = week + 1 if week + 1 <= 4 else 1
         schedules = data.get("schedules", {})
         total_list = []
 
@@ -63,7 +63,7 @@ def get_subjects():
         for day in schedules:
             lessons = schedules[day]
             for lesson in lessons:
-                if week + 1 in lesson.get("weekNumber", []):
+                if curr_week in lesson.get("weekNumber", []):
                     if lesson.get("lessonTypeAbbrev") == 'ЛР':
                         less = lesson.get("subject", "")
                         subgroup = f'({lesson.get("numSubgroup")})' if lesson.get("numSubgroup") else ""
